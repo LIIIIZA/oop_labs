@@ -2,40 +2,78 @@
 
 Binary::Binary() : _size(0), _bin_num{nullptr} {}
 
-Binary::Binary(const std::initializer_list<unsigned char> &lst)
+Binary::Binary(const int &n, const char &l)
 {
-    _size = lst.size();
-    if (_size == 0) {
-        _bin_num = nullptr;
-        return;
+    if (l == '0') {
+        _size = 1;
+        _bin_num = new unsigned char[1];
+        _bin_num[0] = '0';
     }
-    _bin_num = new unsigned char[lst.size()];
-    int ind = lst.size() - 1;
-    for (auto &c : lst){
-        if ((c != '0') && (c != '1')) {
-            throw std::invalid_argument("a binary number consists of only 0 and 1");
+    else if (l == '1') {
+        _size = n;
+        _bin_num = new unsigned char[n];
+        for (size_t i = 0; i < n; ++i) {
+            _bin_num[i] = '1';
         }
-        _bin_num[ind] = c;
-        --ind;
+    }
+    else {
+        throw std::invalid_argument("a binary number consists of only 0 and 1");
+    }
+}
+
+void zeros_delete(std::string &res) {
+    while (res[res.size()-1] == '0') {
+        res.pop_back();
+    }
+    if (res.size() == 0) {
+        res = "0";
     }
 }
 
 Binary::Binary(const std::string &str)
 {
-    _size  = str.size();
-    if (_size == 0) {
+    if (str.size() == 0) {
         _bin_num = nullptr;
         return;
     }
-    _bin_num = new unsigned char[str.size()];
-    int ind = str.size() - 1;
-    for (auto &c : str){
+    std::string res = std::string(str.rbegin(), str.rend());
+    zeros_delete(res);
+    res = std::string(res.rbegin(), res.rend());
+    _size  = res.size();
+    _bin_num = new unsigned char[res.size()];
+    int ind = res.size() - 1;
+    for (auto &c : res){
         if ((c != '0') && (c != '1')) {
             throw std::invalid_argument("a binary number consists of only 0 and 1");
         }
         _bin_num[ind] = c;
         --ind;
     } 
+}
+
+Binary::Binary(const std::initializer_list<unsigned char> &lst)
+{
+    if (lst.size() == 0) {
+        _bin_num = nullptr;
+        return;
+    }
+    std::string res = "";
+    for (auto &l : lst) {
+        res.push_back(l);
+    }
+    res = std::string(res.rbegin(), res.rend());
+    zeros_delete(res);
+    res = std::string(res.rbegin(), res.rend());
+    _size = res.size();
+    _bin_num = new unsigned char[res.size()];
+    int ind = res.size() - 1;
+    for (auto &c : res) {
+        if ((c != '0') && (c != '1')) {
+            throw std::invalid_argument("a binary number consists of only 0 and 1");
+        }
+        _bin_num[ind] = c;
+        --ind;
+    }
 }
 
 Binary::Binary(const Binary &old_binary)
@@ -239,12 +277,7 @@ Binary Binary::remove(const Binary &other)
         }
         digit = 0;
     }
-    while (res[res.size()-1] == '0') {
-        res.pop_back();
-    }
-    if (res.size() == 0) {
-        return Binary("0");
-    } 
+    zeros_delete(res);
     std::string reverse_res = std::string(res.rbegin(), res.rend());
     return Binary(reverse_res);
 }

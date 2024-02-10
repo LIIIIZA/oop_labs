@@ -7,6 +7,7 @@ class Binary
 { 
 public:
     Binary();
+    Binary(const int &n, const char &l);
     Binary(const std::initializer_list< unsigned char> &t);
     Binary(const std::string &t);
     Binary(const Binary& other);

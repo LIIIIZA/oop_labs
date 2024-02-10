@@ -36,6 +36,26 @@ TEST(initialization, test_4)
     ASSERT_TRUE(obj1.equals(obj2) && obj2.equals(obj3) && obj3.equals(obj4));
 }
 
+TEST(initialization, test_5)
+{
+    Binary obj1("0000");
+    Binary obj2 {'0','0','0'};
+    Binary obj3(23, '0');
+    Binary obj4("0");
+    ASSERT_TRUE(obj1.equals(obj2));
+    ASSERT_TRUE(obj2.equals(obj3));
+    ASSERT_TRUE(obj3.equals(obj4));
+}
+
+TEST(initialization, test_6)
+{
+    Binary obj1("0010110");
+    Binary obj2 {'0','0','0', '1', '0', '1', '1', '0'};
+    Binary obj3("10110");
+    ASSERT_TRUE(obj1.equals(obj2));
+    ASSERT_TRUE(obj2.equals(obj3));
+}
+
 TEST(methods, more)
 {
     Binary obj1("1011");
