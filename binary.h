@@ -11,7 +11,7 @@ public:
     Binary(const std::string &t);
     Binary(const Binary& other);
     Binary(Binary&& other) noexcept;      
-    virtual ~Binary() noexcept;
+    ~Binary() noexcept;
 
     Binary add(const Binary& other);
     Binary remove(const Binary& other);
@@ -19,7 +19,6 @@ public:
     bool more(const Binary &other) const;
     bool less(const Binary &other) const;
     std::ostream& print(std::ostream& os);
-    int get_size();
 
 private:
     size_t _size;
